@@ -7,18 +7,17 @@ pipeline{
         stage ('Build'){
             steps{
                 sh 'mvn clean package'
-            }
-            post{
-                success{
-                    echo "Archiving the Artifacts"
-                    archiveArtifacts artifacts: '**/target/*.war'
-                }
+                 echo "Building phase"
             }
         }
-        stage ('Deploy to tomcat server') {
+        stage ('Test'){
             steps{
-               deploy adapters: [tomcat7(credentialsId: 'tomcat', path: '', url: 'http://65.2.151.210:8092')], contextPath: null, war: '**/*.war'
-                echo "Deployment.."
+                 echo "Testing phase"
+            }
+        }
+       stage ('Deploy'){
+            steps{
+                 echo "Deploy phase"
             }
         }
     }
